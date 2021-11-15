@@ -21,10 +21,13 @@ ds.plot_trendline(stock_data, stock_ticker, start_date, end_date)
 ds.plot_simple_ma(stock_data, stock_ticker, start_date, end_date)
 # Plot weighted moving average
 ds.plot_weighted_ma(stock_data, stock_ticker, start_date, end_date)
+# Calculate autocorrelation
+ds.calculate_autocorrelation(stock_data)
 # Plot MACD curve
 ds.plot_macd(stock_data, stock_ticker, start_date, end_date)
-# Do linear regression
+# Prepare linear regression data
 lr_target_date, lr_X, lr_Y = lr.linear_regression_dataprep(stock_data)
+# Do linear regression
 lr_line, lr_rsquared = lr.linear_regression(stock_data, stock_ticker, lr_target_date, lr_X, lr_Y)
-#Evaluate linear regression
+# Evaluate linear regression
 lr.linear_regression_evaluation(lr_Y, lr_line, lr_rsquared)

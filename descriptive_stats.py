@@ -134,14 +134,65 @@ def calculate_autocorrelation(stockdata):
 def plot_weighted_ma(stockdata, ticker, startdate, enddate):
     """
     A program that plots the ticker data over the given timeframe
-    and provides a 4-day weighted moving average.
+    and provides a n-day weighted moving average based on user input.
     """
+    # Get number of days for the custom weighted average.
+    while True:
     
-    # TODO let user input weights
+        try:
+            wa_days = int(input("How many days for your custom weighted average? (up to 20 days) "))
+
+            if wa_days <= 20 and wa_days > 0: # ensure the number of days make sense
+                
+                print(f"Selected number of days: {wa_days}")
+                
+                while True:      
+                    # Define empty list and weight index for user input. Resets if weights don't add up to 1.
+                    weights_for_ma = []
+                    weight_index = 1
+            
+                    # Iterate through the user-stated days
+                    for number in range(wa_days):
+                        
+                        # Check for each user-input number that it is a float.
+                        while True:
+                            
+                            try:
+                                # If wrong, user needs to re-enter the float.
+                                input_weight = float(input(f"Please enter weight #{weight_index}: "))
+                                    
+                                if input_weight >= 0 and input_weight <= 1:
+                                    # Append weights list
+                                    weights_for_ma.append(input_weight)
+                                    # Increase index for print statement
+                                    weight_index += 1
+                                    print(f"Current total amount of weights: {round(sum(weights_for_ma), 2)}")
+                                    break # breaks out of innermost while loop and user can input the next number.
+                                        
+                                else:
+                                    print("Invalid input. Entered float must be positive and between 0 and 1.")
+                                    
+                            except:
+                                print("Invalid input. Please input your weight as a float number.")
+
+                    if int(sum(weights_for_ma)) == 1:
+                        print("Weights have been set.")
+                        break # breaks out of weights list loop
+                    
+                    else:
+                        print("Sum of weights must be equal to 1. Please re-enter your weights.") # try again
+                
+                break # breaks out of initial top tier loop
+                
+            else:
+                print("Invalid input. Please input less or equal to 20 and larger than 1.") # Try again
     
-    # Define the weights for the 5-day moving average (5 weights in total)
-    weights_for_ma = np.array([0.1, 0.2, 0.3, 0.4])
-    ma_weighted = stockdata.Close.rolling(4).apply(lambda x: np.sum(weights_for_ma * x))
+        except:
+            print("Invalid input. Please input the number of days as an integer less or equal to 20 and larger than 1.")
+    
+    # Transform weights into numpy array
+    weights_for_ma = np.array(weights_for_ma)
+    ma_weighted = stockdata.Close.rolling(wa_days).apply(lambda x: np.sum(weights_for_ma * x))
     
     # Create matplotlib plot object        
     fig = plt.figure(figsize=(12,6))
@@ -150,7 +201,7 @@ def plot_weighted_ma(stockdata, ticker, startdate, enddate):
     plt.plot(stockdata.index, stockdata.Close, label="Closing Price")
     
     # Plot weighted moving averages
-    plt.plot(ma_weighted, "y", label="4-Day Weighted Moving Average")
+    plt.plot(ma_weighted, "y", label=f"{wa_days}-Day Weighted Moving Average")
     
     # Give description to axes / values
     plt.xlabel('Date')
