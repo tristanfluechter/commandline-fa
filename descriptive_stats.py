@@ -4,13 +4,13 @@ This module uses a created Pandas Dataframe to conduct descriptive statistics.
 # Import relevant libraries
 from yahoo_fin import stock_info as si
 import pandas as pd
+from pandas.plotting import autocorrelation_plot
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import numpy as np
 import pandas_ta as ta
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from IPython.display import Image
 import data_importer
 
 def show_stock_price(ticker):
@@ -53,9 +53,6 @@ def plot_trendline(stockdata, ticker, startdate, enddate):
     """
     A program that plots the ticker data over the given timeframe
     and provides a linear trendline.
-
-    Args:
-        stockdata: Defaults to stock_data from data_importer.py
     """
     # Create matplotlib plot object        
     fig = plt.figure(figsize=(12,6))
@@ -125,15 +122,26 @@ def plot_simple_ma(stockdata, ticker, startdate, enddate):
     # Show graph
     plt.show()
 
+def calculate_autocorrelation(stockdata):
+    """
+    This program calculates the amount of autocorrelation of a given stock
+    to give additional insights for short-term traders.
+    """
+    autocorrelation_plot(stockdata.Close)
+    plt.title("Autocorrelation Values for Time Series")
+    plt.show()
+
 def plot_weighted_ma(stockdata, ticker, startdate, enddate):
     """
     A program that plots the ticker data over the given timeframe
-    and provides a 5-day weighted moving average.
+    and provides a 4-day weighted moving average.
     """
+    
+    # TODO let user input weights
     
     # Define the weights for the 5-day moving average (5 weights in total)
     weights_for_ma = np.array([0.1, 0.2, 0.3, 0.4])
-    ma_weighted = stockdata.Close.rolling(4).apply(lambda x: np.sum(weights_for_ma*x))
+    ma_weighted = stockdata.Close.rolling(4).apply(lambda x: np.sum(weights_for_ma * x))
     
     # Create matplotlib plot object        
     fig = plt.figure(figsize=(12,6))
@@ -220,6 +228,7 @@ def main():
     show_stock_price(stock_ticker)
     describe_stock_data(stock_data, stock_ticker)
     plot_trendline(stock_data, stock_ticker, start_date, end_date)
+    calculate_autocorrelation(stock_data)
     plot_simple_ma(stock_data, stock_ticker, start_date, end_date)
     plot_weighted_ma(stock_data, stock_ticker, start_date, end_date)
     plot_macd(stock_data, stock_ticker, start_date, end_date)

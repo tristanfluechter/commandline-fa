@@ -10,6 +10,7 @@ import pandas as pd  # To read data
 import statsmodels.api as sm
 import datetime as dt
 
+
 def linear_regression_dataprep(stockdata):
     """
     This program performs a linear regression based on the obtained stock data,
@@ -21,7 +22,7 @@ def linear_regression_dataprep(stockdata):
     # Ask user how many days before current date to use for linear regression
     while True:
         try:
-            lr_days = int(input("How many days do you want to consider for the linear regression? "))
+            lr_days = int(input("How many past days do you want to consider for the linear regression? (integer) "))
             break
         except:
             print("Invalid input. Please enter your desired days as an integer.")
@@ -33,9 +34,9 @@ def linear_regression_dataprep(stockdata):
     while True:
         try:
             # Get user input for date
-            lr_target_date = str(input("Please enter your target date you want to predict the price for: "))
+            lr_target_date = str(input("Please enter your target date you want to predict the price for (YYYY-MM-DD): "))
         
-        # Check if date later than the dataframe date or if in the future
+            # Check if date later than the dataframe date or if in the future
             if dt.datetime.strptime(lr_target_date, '%Y-%m-%d').date() > lr_dataframe.index[-1]:
                 break
         
@@ -57,8 +58,10 @@ def linear_regression_dataprep(stockdata):
     return lr_target_date, lr_X, lr_Y
 
 def linear_regression(stockdata, ticker, targetdate, lr_X, lr_Y):
-    
-    # ADJUST LATER!
+    """
+    This program creates a linear regression with the preprocessed data
+    to make a prediction based on a user-input target date.
+    """
         
     # Create statsmodels LR object and add lr_X
     x = sm.add_constant(lr_X)
@@ -72,6 +75,7 @@ def linear_regression(stockdata, ticker, targetdate, lr_X, lr_Y):
     # Assign linear regression curve y-intercept and slope based on summary table
     lr_slope = lr_results.summary2().tables[1]["Coef."][1] # to get slope coefficient
     lr_y_intercept = lr_results.summary2().tables[1]["Coef."][0] # to get intercept
+    lr_rsquared = lr_results.summary2().tables[0][3][0]
         
     # Convert user input date to ordinal value
     lr_target_date = dt.datetime.strptime(targetdate, '%Y-%m-%d').date().toordinal()
@@ -118,10 +122,32 @@ def linear_regression(stockdata, ticker, targetdate, lr_X, lr_Y):
     
     # Show plot
     plt.show()
+    
+    return lr_line, lr_rsquared
+
+def linear_regression_evaluation(lr_Y, lr_line, lr_rsquared):
+    """
+    Evaluates the linear regression accuracy and the level at which it
+    can give insights into the stock price movement.
+    """
+    # Calculate RMSE based on lr_line (regression) and lr_y (actual values)
+    root_mean_square_error = np.sqrt(((lr_line - lr_Y) ** 2).mean())
+    # RSquared was returned in the Statsmodels OLS Regression summary
+    r_squared = lr_rsquared
+    # Print out results
+    print(f"Linear Regression RMSE: {root_mean_square_error}")
+    print(f"Linear Regression R-Squared: {r_squared}")
+    # Evaluate r-squared metric - how much of the movements does the regression explain?
+    if r_squared <= 0.4:
+        print(f"With an r-squared value of {r_squared}, it is not sufficient to rely on a simple regression to predict stock values.")
+    else:
+        print(f"With an r-squared value of {r_squared}, the regression seems to identify a trend in stock prices. However, we advise to use additional predictive measures.")
+    
 
 def main():
     lr_target_date, lr_X, lr_Y = linear_regression_dataprep()
-    linear_regression()
+    lr_line, lr_rsquared = linear_regression()
+    linear_regression_evaluation(lr_Y, lr_line, lr_rsquared)
 
 if __name__ == "__main__":
     main()
