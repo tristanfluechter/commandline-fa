@@ -18,14 +18,23 @@ def linear_regression_dataprep(stockdata):
     It outputs a graph that includes all stated information.
     """
     
-    # Define the last date !
+    # Get length of dataframe (ie number of days we can consider for linear regression)
+    stockdata_days = len(stockdata)
+    
+     # Define the last date !
     # Ask user how many days before current date to use for linear regression
     while True:
         try:
             lr_days = int(input("How many past days do you want to consider for the linear regression? (integer) "))
-            break
+            
+            # Check if number of days is between end and start date
+            if lr_days < stockdata_days:
+                break
+            else:
+                print(f"Desired {lr_days} days to consider cannot exceed the data time period ({stockdata_days} days).")
+                
         except:
-            print("Invalid input. Please enter your desired days as an integer.")
+            print("Invalid input. Please enter your desired days as an integer. Desired days cannot exceed the data time period.")
     
     # Create dataset with the last lr_days days
     lr_dataframe = stockdata.tail(lr_days)
@@ -36,12 +45,12 @@ def linear_regression_dataprep(stockdata):
             # Get user input for date
             lr_target_date = str(input("Please enter your target date you want to predict the price for (YYYY-MM-DD): "))
         
-            # Check if date later than the dataframe date or if in the future
-            if dt.datetime.strptime(lr_target_date, '%Y-%m-%d').date() > lr_dataframe.index[-1]:
-                break
+            # Check if target date earlier than the dataframe
+            if dt.datetime.strptime(lr_target_date, '%Y-%m-%d').date() < lr_dataframe.index[-1]:
+                print(f"The entered date ({lr_target_date} must in the future (after {lr_dataframe.index[-1]}).")
         
             else:
-                print("The entered date must be after the specified end date.")
+                break
         
         except:
             # If incorrect input, try again!
@@ -133,7 +142,7 @@ def linear_regression_evaluation(lr_Y, lr_line, lr_rsquared):
     # Calculate RMSE based on lr_line (regression) and lr_y (actual values)
     root_mean_square_error = np.sqrt(((lr_line - lr_Y) ** 2).mean())
     # RSquared was returned in the Statsmodels OLS Regression summary
-    r_squared = lr_rsquared
+    r_squared = float(lr_rsquared)
     # Print out results
     print(f"Linear Regression RMSE: {root_mean_square_error}")
     print(f"Linear Regression R-Squared: {r_squared}")

@@ -25,4 +25,6 @@ ds.plot_weighted_ma(stock_data, stock_ticker, start_date, end_date)
 ds.plot_macd(stock_data, stock_ticker, start_date, end_date)
 # Do linear regression
 lr_target_date, lr_X, lr_Y = lr.linear_regression_dataprep(stock_data)
-lr.linear_regression(stock_data, stock_ticker, lr_target_date, lr_X, lr_Y)
+lr_line, lr_rsquared = lr.linear_regression(stock_data, stock_ticker, lr_target_date, lr_X, lr_Y)
+#Evaluate linear regression
+lr.linear_regression_evaluation(lr_Y, lr_line, lr_rsquared)
