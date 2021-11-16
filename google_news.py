@@ -11,15 +11,15 @@ def get_headlines(ticker):
     """
     This program retrieves Goole News headlines based on the ticker.
     """
-    # Create GNews object with restrictions: English, US-based, last 7 days, 5 results
-    google_news = GNews(language='en', country='US', period='7d', max_results=5)
+    # Create GNews object with restrictions: English, US-based, last 7 days, 25 results
+    google_news = GNews(language='en', country='US', period='7d', max_results=25)
     stock_news = google_news.get_news(ticker + " Stock")
     
     # Create empty headlines list
     stock_news_headlines = []
     
-    # Iterate through headlines
-    for headline in range(len(stock_news)):
+    # Iterate through headlines to get top 5 headlines
+    for headline in range(5):
         stock_news_headlines.append(stock_news[headline]["title"])
 
     # Define headlines variables
@@ -31,7 +31,7 @@ def get_headlines(ticker):
     
     print(f"These are the top 5 Google News headlines for {ticker}.")
     print(headline1, "\n",headline2,"\n", headline3,"\n",headline4,"\n", headline5)
-    return headline1, headline2, headline3, headline4, headline5
+    return stock_news, headline1, headline2, headline3, headline4, headline5
 
 def main():
     get_headlines()

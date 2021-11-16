@@ -28,13 +28,13 @@ def linear_regression_dataprep(stockdata):
             lr_days = int(input("How many past days do you want to consider for the linear regression? (integer) "))
             
             # Check if number of days is between end and start date
-            if lr_days < stockdata_days:
+            if lr_days < stockdata_days and lr_days >= 0:
                 break
             else:
                 print(f"Desired {lr_days} days to consider cannot exceed the data time period ({stockdata_days} days).")
                 
         except:
-            print("Invalid input. Please enter your desired days as an integer. Desired days cannot exceed the data time period.")
+            print("Invalid input. Please enter your desired days as a positive integer. Desired days cannot exceed the data time period.")
     
     # Create dataset with the last lr_days days
     lr_dataframe = stockdata.tail(lr_days)
@@ -76,7 +76,7 @@ def linear_regression(stockdata, ticker, targetdate, lr_X, lr_Y):
     x = sm.add_constant(lr_X)
         
     # Predict Results
-    lr_results = sm.OLS(lr_Y,x).fit()
+    lr_results = sm.OLS(lr_Y,x).fit() # variables do not need to be scaled for OLS regression.
         
     # Give summary of linear regression
     lr_results.summary()
