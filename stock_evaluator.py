@@ -5,7 +5,7 @@ import modules.financial_data as fd
 import modules.LSTM_prediction as lstm
 import modules.sentiment_analysis as sa
 import modules.google_news as gn
-import modules.facebook_prophet as prophet
+import modules.facebook_prophet as pf
 
 # Import stock data and get user start and end date
 stock_data, stock_ticker, start_date, end_date = data_importer.get_yahoo_data()
@@ -56,4 +56,11 @@ lstm.lstm_evaluation(prediction, close_train)
 rf_pred = sa.rf_pred(stock_news)
 
 # Make Prophet Prediction
-prophet_pred = prophet.prophet_forecast(stock_data)
+# Prepare Dataset
+prophet_data_train = pf.prophet_forecast(stock_data)
+# Create Forecast
+m, forecast, prophet_pred = pf.prophet_forecast(prophet_data_train)
+# Visualize Forecast
+pf.prophet_visualize_forecast(m, forecast)
+# Visualize components
+pf.prophet_visualize_components(m, forecast)
