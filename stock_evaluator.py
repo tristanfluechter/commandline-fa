@@ -42,11 +42,11 @@ lr_line, lr_rsquared, reg_pred = lr.linear_regression(lr_target_date, lr_X, lr_Y
 lr.linear_regression_evaluation(lr_Y, lr_line, lr_rsquared)
 
 # Create LSTM dataset
-look_back, date_train, date_test, close_train, close_test, train_generator, test_generator, close_data_noarray, close_data = lstm.lstm_prepare_data(stock_data, stock_ticker)
+look_back, date_train, date_test, close_train, close_test, train_generator, test_generator, close_data_noarray, close_data = lstm.lstm_prepare_data(stock_data)
 # Train LSTM model
 model, prediction, close_train, close_test = lstm.lstm_train(look_back, train_generator, test_generator, close_test, close_train)
 # Visualize Model
-lstm.lstm_visualize(date_test, date_train, close_test, close_train, prediction, stock_ticker)
+lstm.lstm_visualize(date_test, date_train, close_test, close_train, prediction)
 # Make Prediction
 lstm_pred = lstm.lstm_make_prediction(model, look_back, stock_data, close_data, close_data_noarray, stock_ticker)
 # Evaluate Prediction
