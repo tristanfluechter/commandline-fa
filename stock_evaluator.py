@@ -53,7 +53,7 @@ lstm_pred = lstm.lstm_make_prediction(model, look_back, stock_data, close_data, 
 lstm.lstm_evaluation(prediction, close_train)
 
 # Make randomforest prediction
-rf_pred = sa.rf_pred(stock_news)
+rf_pred = sa.rf_predict(stock_news)
 
 # Make Prophet Prediction
 # Prepare Dataset
