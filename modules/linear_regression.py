@@ -89,7 +89,7 @@ def linear_regression(targetdate, lr_X, lr_Y):
     lr_rsquared = lr_results.summary2().tables[0][3][0]
         
     # Convert user input date to ordinal value
-    lr_target_date = targetdate.toordinal()
+    lr_target_date = dt.datetime.strptime(targetdate, '%Y-%m-%d').date().toordinal()
         
     # Append target date to lr_X and lr_Y
     lr_X = np.append(lr_X, lr_target_date)
