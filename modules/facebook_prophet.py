@@ -22,10 +22,10 @@ def prophet_dataprep(stock_data):
     stock_data["Date"] = stock_data.index
     
     # Get relevant columns
-    prophet_data = stock_data[["Date","Adj Close"]]
+    prophet_data = stock_data[["Date","Close"]]
 
     # Rename columns
-    prophet_data = prophet_data.rename(columns={"Date": "ds", "Adj Close": "y"})
+    prophet_data = prophet_data.rename(columns={"Date": "ds", "Close": "y"})
 
     # Define train-test-split
     split = int(len(prophet_data) * 0.6)
@@ -34,6 +34,8 @@ def prophet_dataprep(stock_data):
     prophet_data_train = prophet_data[0:split]
     prophet_data_test = prophet_data[split:]
 
+    print(prophet_data_train.head())
+    
     return prophet_data_train
 
 def prophet_forecast(prophet_data_train):
@@ -42,6 +44,7 @@ def prophet_forecast(prophet_data_train):
     """
     # Create Prophet Model
     m = Prophet()
+    print(prophet_data_train.head())
     m.fit(prophet_data_train)
 
     # Make future predictions
