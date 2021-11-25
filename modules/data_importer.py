@@ -30,9 +30,3 @@ def get_yahoo_data():
     print(f"Successfully imported stock data for ticker {stock_ticker} from {start_date} to {end_date}.")
     
     return stock_data, stock_ticker, start_date, end_date
-
-def main():
-    stock_data, stock_ticker, start_date, end_date = get_yahoo_data()
-    
-if __name__ == "__main__":
-    main()

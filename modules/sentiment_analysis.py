@@ -125,10 +125,3 @@ def rf_predict(stock_news):
         rf_pred = "Negative Sentiment"
     
     return rf_pred
-
-def main():
-    countvector, randomclassifier = train_rf_model()
-    
-if __name__ == "__main__":
-    main()
-    

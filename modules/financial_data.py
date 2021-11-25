@@ -78,10 +78,3 @@ def scrape_financial_kpi(ticker):
     trading_volume = re.findall("\d+\.\d+M", str(span_trading_volume[1]))[0]
     
     print(f"Trading volume: {trading_volume}")
-    
-def main():
-    scrape_analyst_predictions("AAPL")
-    scrape_financial_kpi("AAPL")
-
-if __name__ == "__main__":
-    main()

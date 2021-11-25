@@ -38,10 +38,3 @@ def print_headlines(stock_news, stock_ticker):
     
     for i in range(5):
         print(stock_news_headlines[i])
-
-def main():
-    get_headlines()
-    print_headlines()
-    
-if __name__ == "__main__":
-    main()

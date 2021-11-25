@@ -11,7 +11,6 @@ import numpy as np
 import pandas_ta as ta
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-import modules.data_importer as data_importer
 
 def plot_stockdata(stockdata):
     """
@@ -306,16 +305,3 @@ def plot_macd(stockdata, ticker):
     # Update options and show plot
     fig.update_layout(layout)
     fig.show()
-    
-    
-def main():
-    stock_data, stock_ticker, start_date, end_date = data_importer.get_yahoo_data()
-    show_stock_price(stock_ticker)
-    describe_stock_data(stock_data, stock_ticker)
-    plot_trendline(stock_data, stock_ticker, start_date, end_date)
-    plot_simple_ma(stock_data, stock_ticker, start_date, end_date)
-    plot_weighted_ma(stock_data, stock_ticker, start_date, end_date)
-    plot_macd(stock_data, stock_ticker, start_date, end_date)
-
-if __name__ == '__main__':
-    main()
