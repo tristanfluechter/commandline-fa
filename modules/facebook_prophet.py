@@ -33,8 +33,6 @@ def prophet_dataprep(stock_data):
     # Split data
     prophet_data_train = prophet_data[0:split]
     prophet_data_test = prophet_data[split:]
-
-    print(prophet_data_train.head())
     
     return prophet_data_train
 

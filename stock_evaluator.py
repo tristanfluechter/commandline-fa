@@ -9,7 +9,6 @@ import modules.facebook_prophet as pf
 
 # Import stock data and get user start and end date
 stock_data, stock_ticker, start_date, end_date = data_importer.get_yahoo_data()
-stock_data_raw = stock_data.copy()
 # Plot stock data
 ds.plot_stockdata(stock_data)
 # Show stock data
@@ -57,7 +56,7 @@ rf_pred = sa.rf_predict(stock_news)
 
 # Make Prophet Prediction
 # Prepare Dataset
-prophet_data_train = pf.prophet_forecast(stock_data_raw)
+prophet_data_train = pf.prophet_dataprep(stock_data)
 # Create Forecast
 m, forecast, prophet_pred = pf.prophet_forecast(prophet_data_train)
 # Visualize Forecast
