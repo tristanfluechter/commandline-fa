@@ -10,8 +10,6 @@ import pandas as pd  # To read data
 import statsmodels.api as sm
 import datetime as dt
 import plotly.graph_objects as go
-from data_importer import get_yahoo_data
-
 
 def linear_regression_dataprep(stockdata):
     """
