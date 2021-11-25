@@ -12,13 +12,10 @@ from prophet.plot import plot_plotly, plot_components_plotly
 # warnings.filterwarnings('ignore')  # Hide warnings
 import plotly.graph_objects as go
 pd.core.common.is_list_like = pd.api.types.is_list_like
-# import data_importer
 
-def prophet_forecast(stock_data):
+def prophet_dataprep(stock_data):
     """
-    This module creates a stock forecast with the Facebook Prophet model based on the
-    stock_data dataframe. It also creates a trendline as well as a weekday analysis of
-    stock movement.
+    Prepares stock data to suit Facebook Prophet prediction model.
     """
     
     # Reset Dataframe Index
@@ -37,6 +34,12 @@ def prophet_forecast(stock_data):
     prophet_data_train = prophet_data[0:split]
     prophet_data_test = prophet_data[split:]
 
+    return prophet_data_train
+
+def prophet_forecast(prophet_data_train):
+    """
+    Creates forecast with Facebook Prophet model.
+    """
     # Create Prophet Model
     m = Prophet()
     m.fit(prophet_data_train)
@@ -48,6 +51,12 @@ def prophet_forecast(stock_data):
     # Get last date of prediction 
     prophet_pred = int(forecast["trend"].iloc[-1])
 
+    return m, forecast, prophet_pred
+
+def prophet_visualize_forecast(m, forecast):
+    """
+    Visualizes forecasted data in a plotly graph.
+    """
     # Create plotly figure for forecast
     fig = plot_plotly(m, forecast)
     
@@ -71,7 +80,11 @@ def prophet_forecast(stock_data):
     
     # Show prediction graph
     fig.show()
-    
+
+def prophet_visualize_components(m, forecast):
+    """
+    Visualizes model components (trend & weekday trend).
+    """
     # Create components analysis plotly object
     fig2 = plot_components_plotly(m, forecast)
     
@@ -87,6 +100,4 @@ def prophet_forecast(stock_data):
     fig2.update_yaxes(showline=True, linewidth=1, linecolor='black', mirror=True)
     
     # Show Graph
-    fig.show()
-
-    return prophet_pred
+    fig2.show()
