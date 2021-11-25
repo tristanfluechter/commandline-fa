@@ -18,7 +18,7 @@ from keras.layers import LSTM, Dense
 import plotly.graph_objects as go
 
 
-def lstm_prepare_data(stockdata, stockticker):
+def lstm_prepare_data(stockdata):
     """
     This program prepares the data for a LSTM-model by getting a user input on the train-test-split.
     To avoid overfitting, data should always be split into training and testing data. After training a model with one LSTM layer,
