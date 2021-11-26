@@ -126,7 +126,7 @@ def lstm_visualize(date_test, date_train, close_test, close_train, prediction):
     fig.layout.update(showlegend = True, legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01), 
                       margin=go.layout.Margin(l=60, r=0, b=0, t=30),
                       paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-                      xaxis=dict(title="Date"),yaxis=dict(title="Closing Price in USD"))
+                      xaxis=dict(title="Date"),yaxis=dict(title="Closing Price in USD"),title="LSTM Training")
     
     # Format axes: Border
     fig.update_xaxes(showline=True, linewidth=1, linecolor='black', mirror=True)
@@ -188,7 +188,7 @@ def lstm_make_prediction(model, look_back, stockdata, close_data, close_data_noa
     fig2.layout.update(showlegend = True, legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01), 
                       margin=go.layout.Margin(l=60, r=0, b=0, t=30),
                       paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-                      xaxis=dict(title="Date"),yaxis=dict(title="Closing Price in USD"))
+                      xaxis=dict(title="Date"),yaxis=dict(title="Closing Price in USD"), title="LSTM Prediction")
     
     fig2.update_xaxes(showline=True, linewidth=1, linecolor='black', mirror=True)
     fig2.update_yaxes(showline=True, linewidth=1, linecolor='black', mirror=True)

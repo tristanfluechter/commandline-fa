@@ -129,7 +129,7 @@ def linear_regression(targetdate, lr_X, lr_Y):
     fig.layout.update(showlegend = True, legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01), 
                       margin=go.layout.Margin(l=60, r=0, b=0, t=30),
                       paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-                      xaxis=dict(title="Date"),yaxis=dict(title="Closing Price in USD"))
+                      xaxis=dict(title="Date"),yaxis=dict(title="Closing Price in USD"),title="Linear Regression Prediction")
     
     # Format axes
     fig.update_xaxes(showline=True, linewidth=1, linecolor='black', mirror=True)

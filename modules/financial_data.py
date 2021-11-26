@@ -44,7 +44,9 @@ def scrape_analyst_predictions(ticker):
     print(f"Analyst predictions for stock ticker {ticker}: ")
     print(f"Median price target according to CNN analysts is USD {median_price}.")
     print(f"Upper-end price target is USD {high_price}.")
-    print(f"Lower-end price target is USD {low_price}.")    
+    print(f"Lower-end price target is USD {low_price}.") 
+    
+    return median_price   
     
 def scrape_financial_kpi(ticker):
     """
@@ -78,3 +80,5 @@ def scrape_financial_kpi(ticker):
     trading_volume = re.findall("\d+\.\d+M", str(span_trading_volume[1]))[0]
     
     print(f"Trading volume: {trading_volume}")
+    
+    return abs_change, percent_change

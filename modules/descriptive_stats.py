@@ -29,7 +29,7 @@ def plot_stockdata(stockdata):
     fig.layout.update(showlegend = True, legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01), 
                       xaxis_rangeslider_visible = True, margin=go.layout.Margin(l=60, r=0, b=0, t=30),
                       paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-                      xaxis=dict(title="Date"),yaxis=dict(title="Closing Price in USD"))
+                      xaxis=dict(title="Date"),yaxis=dict(title="Closing Price in USD"),title="Stock Data over Time")
     
     # Show chart axes lines
     fig.update_xaxes(showline=True, linewidth=1, linecolor='black', mirror=True)
@@ -102,7 +102,7 @@ def plot_trendline(stockdata):
     fig.layout.update(showlegend = True, legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01), 
                       margin=go.layout.Margin(l=60, r=0, b=0, t=30),
                       paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-                      xaxis=dict(title="Date"),yaxis=dict(title="Closing Price in USD"))
+                      xaxis=dict(title="Date"),yaxis=dict(title="Closing Price in USD"), title="Trendline")
     
     # Show chart axes lines
     fig.update_xaxes(showline=True, linewidth=1, linecolor='black', mirror=True)
@@ -149,9 +149,9 @@ def plot_simple_ma(stockdata):
     # remove title margins, remove backgroud colour,
     # label the axes
     fig.layout.update(showlegend = True, legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01), 
-                      xaxis_rangeslider_visible = True, margin=go.layout.Margin(l=60, r=0, b=0, t=30),
+                      xaxis_rangeslider_visible=True, margin=go.layout.Margin(l=60, r=0, b=0, t=30),
                       paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-                      xaxis=dict(title="Date"),yaxis=dict(title="Closing Price in USD"))
+                      xaxis=dict(title="Date"),yaxis=dict(title="Closing Price in USD"), title="Moving Averages")
     
     # Show chart axes lines
     fig.update_xaxes(showline=True, linewidth=1, linecolor='black', mirror=True)
@@ -238,7 +238,7 @@ def plot_weighted_ma(stockdata):
     fig.layout.update(showlegend = True, legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01), 
                       xaxis_rangeslider_visible = True, margin=go.layout.Margin(l=60, r=0, b=0, t=30),
                       paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-                      xaxis=dict(title="Date"),yaxis=dict(title="Closing Price in USD"))
+                      xaxis=dict(title="Date"),yaxis=dict(title="Closing Price in USD"),title="Weighted Moving Average")
     
     # Show chart axes lines
     fig.update_xaxes(showline=True, linewidth=1, linecolor='black', mirror=True)
