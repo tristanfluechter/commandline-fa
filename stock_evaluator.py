@@ -33,33 +33,42 @@ ds.plot_weighted_ma(stock_data)
 # Plot MACD curve
 ds.plot_macd(stock_data, stock_ticker)
 
-# Prepare Regression Data
-lr_target_date, lr_X, lr_Y = lr.linear_regression_dataprep(stock_data)
-# Do regression
-lr_line, lr_rsquared, reg_pred = lr.linear_regression(lr_target_date, lr_X, lr_Y)
-# Evaluate regression
-lr.linear_regression_evaluation(lr_Y, lr_line, lr_rsquared)
+try:
+    # Prepare Regression Data
+    lr_target_date, lr_X, lr_Y = lr.linear_regression_dataprep(stock_data)
+    # Do regression
+    lr_line, lr_rsquared, reg_pred = lr.linear_regression(lr_target_date, lr_X, lr_Y)
+    # Evaluate regression
+    lr.linear_regression_evaluation(lr_Y, lr_line, lr_rsquared)
+except:
+    print("Timeframe not suitable for linear regression prediction. Please enter timeframe of minimum 100 days length.")
 
-# Create LSTM dataset
-look_back, date_train, date_test, close_train, close_test, train_generator, test_generator, close_data_noarray, close_data = lstm.lstm_prepare_data(stock_data)
-# Train LSTM model
-model, prediction, close_train, close_test = lstm.lstm_train(look_back, train_generator, test_generator, close_test, close_train)
-# Visualize Model
-lstm.lstm_visualize(date_test, date_train, close_test, close_train, prediction)
-# Make Prediction
-lstm_pred = lstm.lstm_make_prediction(model, look_back, stock_data, close_data, close_data_noarray, stock_ticker)
-# Evaluate Prediction
-lstm.lstm_evaluation(prediction, close_train)
+try:
+    # Create LSTM dataset
+    look_back, date_train, date_test, close_train, close_test, train_generator, test_generator, close_data_noarray, close_data = lstm.lstm_prepare_data(stock_data)
+    # Train LSTM model
+    model, prediction, close_train, close_test = lstm.lstm_train(look_back, train_generator, test_generator, close_test, close_train)
+    # Visualize Model
+    lstm.lstm_visualize(date_test, date_train, close_test, close_train, prediction)
+    # Make Prediction
+    lstm_pred = lstm.lstm_make_prediction(model, look_back, stock_data, close_data, close_data_noarray, stock_ticker)
+    # Evaluate Prediction
+    lstm.lstm_evaluation(prediction, close_train)
+except:
+    print("Timeframe not suitable for LSTM prediction. Please enter timeframe of minimum 100 days length.")
 
 # Make randomforest prediction
 rf_pred = sa.rf_predict(stock_news)
 
-# Make Prophet Prediction
-# Prepare Dataset
-prophet_data_train = pf.prophet_dataprep(stock_data)
-# Create Forecast
-m, forecast, prophet_pred = pf.prophet_forecast(prophet_data_train)
-# Visualize Forecast
-pf.prophet_visualize_forecast(m, forecast)
-# Visualize components
-pf.prophet_visualize_components(m, forecast)
+try:
+    # Make Prophet Prediction
+    # Prepare Dataset
+    prophet_data_train = pf.prophet_dataprep(stock_data)
+    # Create Forecast
+    m, forecast, prophet_pred = pf.prophet_forecast(prophet_data_train)
+    # Visualize Forecast
+    pf.prophet_visualize_forecast(m, forecast)
+    # Visualize components
+    pf.prophet_visualize_components(m, forecast)
+except:
+    print("Timeframe not suitable for Facebook Prophet prediction. Please enter timeframe of minimum 100 days length.")

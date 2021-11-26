@@ -160,6 +160,45 @@ def plot_simple_ma(stockdata):
     # Show graph
     fig.show()
 
+def get_wma_weights(wa_days):
+    while True:      
+    # Define empty list and weight index for user input. Resets if weights don't add up to 1.
+        weights_for_ma = []
+        weight_index = 1
+    
+        # Iterate through the user-stated days
+        for number in range(wa_days):
+                            
+        # Check for each user-input number that it is a float.
+            while True:
+                                
+                try:
+                    # If wrong, user needs to re-enter the float.
+                    input_weight = float(input(f"Please enter weight #{weight_index}: "))
+                                        
+                    if input_weight >= 0 and input_weight <= 1:
+                        # Append weights list
+                        weights_for_ma.append(input_weight)
+                        # Increase index for print statement
+                        weight_index += 1
+                        print(f"Current total amount of weights: {round(sum(weights_for_ma), 2)}")
+                        break # breaks out of innermost while loop and user can input the next number.
+                                            
+                    else:
+                        print("Invalid input. Entered float must be positive and between 0 and 1.")
+                                        
+                except:
+                    print("Invalid input. Please input your weight as a float number.")
+
+        if float(sum(weights_for_ma)) == 1:
+            print("Weights have been set.")
+            break # breaks out of weights list loop
+                        
+        else:
+            print("Sum of weights must be equal to 1. Please re-enter your weights.") # try again
+    
+    return weights_for_ma        
+
 def plot_weighted_ma(stockdata):
     """
     A program that plots the ticker data over the given timeframe
@@ -174,45 +213,8 @@ def plot_weighted_ma(stockdata):
             if wa_days <= 7 and wa_days > 0: # ensure the number of days make sense
                 
                 print(f"Selected number of days: {wa_days}")
-                
-                while True:      
-                    # Define empty list and weight index for user input. Resets if weights don't add up to 1.
-                    weights_for_ma = []
-                    weight_index = 1
-            
-                    # Iterate through the user-stated days
-                    for number in range(wa_days):
-                        
-                        # Check for each user-input number that it is a float.
-                        while True:
-                            
-                            try:
-                                # If wrong, user needs to re-enter the float.
-                                input_weight = float(input(f"Please enter weight #{weight_index}: "))
-                                    
-                                if input_weight >= 0 and input_weight <= 1:
-                                    # Append weights list
-                                    weights_for_ma.append(input_weight)
-                                    # Increase index for print statement
-                                    weight_index += 1
-                                    print(f"Current total amount of weights: {round(sum(weights_for_ma), 2)}")
-                                    break # breaks out of innermost while loop and user can input the next number.
-                                        
-                                else:
-                                    print("Invalid input. Entered float must be positive and between 0 and 1.")
-                                    
-                            except:
-                                print("Invalid input. Please input your weight as a float number.")
-
-                    if int(sum(weights_for_ma)) == 1:
-                        print("Weights have been set.")
-                        break # breaks out of weights list loop
-                    
-                    else:
-                        print("Sum of weights must be equal to 1. Please re-enter your weights.") # try again
-                
-                break # breaks out of initial top tier loop
-                
+                weights_for_ma = get_wma_weights(wa_days)
+                break
             else:
                 print("Invalid input. Please input less or equal to 7 and larger than 1.") # Try again
     
