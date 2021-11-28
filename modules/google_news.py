@@ -34,7 +34,7 @@ def print_headlines(stock_news, stock_ticker):
     headline5 = stock_news_headlines[4]
     
     # Write headlines
-    print(f"These are the top 5 Google News headlines for {stock_ticker}:")
+    print(f"These are the top 5 Google News headlines for {stock_ticker}:\n")
     
     for i in range(5):
         print(stock_news_headlines[i])
