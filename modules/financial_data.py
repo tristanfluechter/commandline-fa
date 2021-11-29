@@ -41,7 +41,7 @@ def scrape_analyst_predictions(ticker):
     low_price = analyst_predictions[2]
 
     # Print out price information
-    print(f"Analyst predictions for stock ticker {ticker}: ")
+    print(f"\nAnalyst predictions for stock ticker {ticker}: ")
     print(f"Median price target according to CNN analysts is USD {median_price}.")
     print(f"Upper-end price target is USD {high_price}.")
     print(f"Lower-end price target is USD {low_price}.") 
@@ -71,7 +71,7 @@ def scrape_financial_kpi(ticker):
     percent_change = re.findall("[-]?\d+\.\d+%", str(span_percent_change_intraday[0]))[1] # second value in table is % change
     
     # Print out intraday change information
-    print(f"Intraday change and trading volume of {ticker}: ")
+    print(f"\nIntraday change and trading volume of {ticker}: ")
     print(f"Intraday stock value change: USD {abs_change}.")
     print(f"Intraday stock value change: {percent_change}%")
     

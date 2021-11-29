@@ -84,15 +84,16 @@ def descriptive_stats_menu(stock_data, stock_ticker):
     
         # Do if choice    
         elif choice == '2' : 
+            print("\n")
             # Plot simple trendline
             ds.plot_trendline(stock_data)
             print("Successful output of trendline in browser window.")
-            print("\n")
             # Continue analysis or quit?
             continue_choice()
     
         # Do if choice    
         elif choice == '3' :
+            print("\n")
             # Plot moving averages
             ds.plot_simple_ma(stock_data)
             print("Successful output of MA in browser window.")
@@ -102,6 +103,7 @@ def descriptive_stats_menu(stock_data, stock_ticker):
     
         # Do if choice    
         elif choice == '4' :
+            print("\n")
             # Plot weighted moving average
             ds.plot_weighted_ma(stock_data)
             print("Successful output of weighted MA in browser window.")
@@ -111,6 +113,7 @@ def descriptive_stats_menu(stock_data, stock_ticker):
     
         # Do if choice    
         elif choice == '5' :
+            print("\n")
             # Plot MACD curve
             ds.plot_macd(stock_data, stock_ticker)
             print("Successful output of MACD in browser window.")
@@ -156,7 +159,7 @@ def predictive_stats_menu(stock_data, stock_ticker):
         if choice == "1":
             
             try:
-            
+                print("\n")
                 # Prepare Regression Data
                 lr_target_date, lr_X, lr_Y = lr.linear_regression_dataprep(stock_data)
                 print("Preparing data for linear regression...")
@@ -177,6 +180,7 @@ def predictive_stats_menu(stock_data, stock_ticker):
         elif choice == "2":
             
             try:
+                print("\n")
                 # Create LSTM dataset
                 look_back, date_train, date_test, close_train, close_test, train_generator, test_generator, close_data_noarray, close_data = lstm.lstm_prepare_data(stock_data)
                 print("Training LSTM model...")
@@ -199,7 +203,7 @@ def predictive_stats_menu(stock_data, stock_ticker):
     
         # Do if choice   
         elif choice == "3":
-            
+            print("\n")
             print("Gathering news headlines and testing them with Random Forest model...")
             stock_news = gn.get_headlines(stock_ticker)
             sa.rf_predict(stock_news)
@@ -212,6 +216,7 @@ def predictive_stats_menu(stock_data, stock_ticker):
         elif choice == "4":
             
             try:
+                print("\n")
                 # Make Prophet Prediction
                 # Prepare Dataset
                 prophet_data_train = pf.prophet_dataprep(stock_data)
@@ -226,6 +231,7 @@ def predictive_stats_menu(stock_data, stock_ticker):
                 print("Successful output of Facebook Prophet components analysis in browser window.")
             
             except:
+                print("\n")
                 print("Timeframe not suitable for Facebook Prophet prediction. Please enter timeframe of minimum 100 days length.")
             
             print("\n")
@@ -244,6 +250,7 @@ def predictive_stats_menu(stock_data, stock_ticker):
         
         else:
             # User has to make new input
+            print("\n")
             print("Wrong input format. Please re-enter.")
             continue
 
@@ -309,23 +316,23 @@ def main_menu(stock_data, stock_ticker, start_date, end_date):
             ds.plot_stockdata(stock_data)
             # Show stock price
             ds.show_stock_price(stock_ticker)
-            print("\n")
             # Continue analysis or quit?
+            print("\n")
             continue_choice()
     
         # Do if choice     
         elif choice == '2' :
+            print("\n")
             # Show news headlines
             stock_news = gn.get_headlines(stock_ticker)
             gn.print_headlines(stock_news, stock_ticker)
-            print("\n")
             # Continue analysis or quit?
+            print("\n")
             continue_choice()
         
         # Do if choice    
         elif choice == '3' :
             # Show financial data
-            print("\n")
             fd.scrape_analyst_predictions(stock_ticker)
             fd.scrape_financial_kpi(stock_ticker)
             print("\n")
