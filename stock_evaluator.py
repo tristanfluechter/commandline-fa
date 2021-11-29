@@ -23,15 +23,21 @@ warnings.filterwarnings('ignore')
 
 # Define App Startup Screen
 def startup():
+    """
+    Program to import a stock dataframe through an API call from Yahoo Finance. Available stock data are all tickers
+    that are listed on Yahoo Finance. Error handling in data_importer module ensures valid timeframe.
+    """
+    
     # CLEAR WINDOW
     os.system("clear")
     print("Welcome to our stock predictor! Provide a stock ticker and a timeframe to perform thorough analysis!")
     stock_data, stock_ticker, start_date, end_date = data_importer.get_yahoo_data()
+    
     return stock_data, stock_ticker, start_date, end_date
 
 def pred_menu_text():
-        print("\nChoose service you want to use : ")
-        print("""
+    print("\nChoose service you want to use : ")
+    print("""
         1 : Linear Regression Prediction
         2 : LSTM Prediction
         3 : Random Forest Sentiment Analysis
@@ -41,8 +47,8 @@ def pred_menu_text():
         """)
 
 def desc_menu_text():
-        print("\nChoose service you want to use : ")
-        print("""
+    print("\nChoose service you want to use : ")
+    print("""
         1 : Basic Descriptive Stats
         2 : Trendlines
         3 : Moving Average
@@ -54,79 +60,99 @@ def desc_menu_text():
 
 # Define Descriptive Sub-Menu
 def descriptive_stats_menu(stock_data, stock_ticker):
+    """
+    Sub-menu for descriptive stats with the option to either 
+    go back to main menu or exit the application
+    """
+    
     # While-Loop to keep displaying if wrong input_weight
     choice = 0
     
+    # While not quit
     while choice != "7":
-        
+        # Display menu text
         desc_menu_text() 
-
+        # Get user choice
         choice = input("\nEnter your choice : ")
         
+        # Do if choice
         if choice == '1':
             ds.describe_stock_data(stock_data, stock_ticker)
             print("\n")
+            # Continue analysis or quit?
             continue_choice()
     
-            
+        # Do if choice    
         elif choice == '2' : 
             # Plot simple trendline
             ds.plot_trendline(stock_data)
             print("Successful output of trendline in browser window.")
             print("\n")
+            # Continue analysis or quit?
             continue_choice()
     
-            
+        # Do if choice    
         elif choice == '3' :
             # Plot moving averages
             ds.plot_simple_ma(stock_data)
             print("Successful output of MA in browser window.")
             print("\n")
+            # Continue analysis or quit?
             continue_choice()
     
-            
+        # Do if choice    
         elif choice == '4' :
             # Plot weighted moving average
             ds.plot_weighted_ma(stock_data)
             print("Successful output of weighted MA in browser window.")
             print("\n")
+            # Continue analysis or quit?
             continue_choice()
     
-            
+        # Do if choice    
         elif choice == '5' :
             # Plot MACD curve
             ds.plot_macd(stock_data, stock_ticker)
             print("Successful output of MACD in browser window.")
             print("\n")
+            # Continue analysis or quit?
             continue_choice()
     
-            
+        # Do if choice    
         elif choice == '6' :
-    
+            # Go back to main menu
             break
             
-            
+        # Do if choice    
         elif choice == '7' :
-    
+            # Exit application
             exit()
-            
-        
+             
         else:
             print("Wrong input format. Please re-enter.")
+            # User makes new input
             continue
 
 # Define Predictive Sub-Menu
 def predictive_stats_menu(stock_data, stock_ticker):
+    """
+    Sub-menu for predictive stats with the option to either 
+    go back to main menu or exit the application
+    """
     
-    # While-Loop to keep displaying if wrong input_weight
+    # While-Loop to keep displaying if wrong input
     choice = 0
     
+    # While not quit
     while choice != "7":
         
+        # Show menu text
         pred_menu_text()
         
+        # Get user choice
         choice = input("\nEnter your choice : ")
         
+        # Do if choice
         if choice == "1":
             
             try:
@@ -144,10 +170,10 @@ def predictive_stats_menu(stock_data, stock_ticker):
                 print("Timeframe not suitable for linear regression prediction. Please enter timeframe of minimum 100 days length.")
             
             print("\n")
+            # Continue analysis or quit?
             continue_choice()
-    
-            
         
+        # Do if choice
         elif choice == "2":
             
             try:
@@ -168,18 +194,21 @@ def predictive_stats_menu(stock_data, stock_ticker):
                 print("Timeframe not suitable for LSTM prediction. Please enter timeframe of minimum 100 days length.")
 
             print("\n")
+            # Continue analysis or quit?
             continue_choice()
     
-            
+        # Do if choice   
         elif choice == "3":
+            
             print("Gathering news headlines and testing them with Random Forest model...")
             stock_news = gn.get_headlines(stock_ticker)
             sa.rf_predict(stock_news)
             
             print("\n")
+            # Continue analysis or quit?
             continue_choice()
     
-        
+        # Do if choice
         elif choice == "4":
             
             try:
@@ -195,21 +224,26 @@ def predictive_stats_menu(stock_data, stock_ticker):
                 # Visualize components
                 pf.prophet_visualize_components(m, forecast)
                 print("Successful output of Facebook Prophet components analysis in browser window.")
+            
             except:
                 print("Timeframe not suitable for Facebook Prophet prediction. Please enter timeframe of minimum 100 days length.")
             
             print("\n")
+            # Continue analysis or quit?
             continue_choice()  
     
-        
+        # Do if choice
         elif choice == "5":
-    
+            # Get back to main menu 
             break
         
+        # Do if choice
         elif choice == "6":
+            # Exit application
             exit()
         
         else:
+            # User has to make new input
             print("Wrong input format. Please re-enter.")
             continue
 
@@ -227,6 +261,11 @@ def print_menu_text():
         """)
 
 def continue_choice():
+    """
+    Asks user if they want to continue analysis or quit. 
+    Clears terminal window afterwards.
+    """
+    
     cont_choice = ""
     
     while cont_choice not in ["Y", "N"]:
@@ -246,9 +285,16 @@ def continue_choice():
 
 # Define Overall Menu Structure
 def main_menu(stock_data, stock_ticker, start_date, end_date):
+    """
+    Main menu for stock evaluator. Takes in variables from startup().
+    Offers to either pursue some basic statistics or move into the descriptive / predictive sub-menus.
+    Allows user to re-enter stock data.
+    """
+    
     # While Loop to keep menu running 
     choice = 0
     
+    # While not exit
     while choice != '7':
         
         print_menu_text()
@@ -256,6 +302,7 @@ def main_menu(stock_data, stock_ticker, start_date, end_date):
         # Get user choice
         choice = input("Enter your choice : ")
 
+        # Do if choice
         if choice == '1':
             # Plot stock data
             print("\nSuccessful output of stock data in browser window.")
@@ -263,37 +310,46 @@ def main_menu(stock_data, stock_ticker, start_date, end_date):
             # Show stock price
             ds.show_stock_price(stock_ticker)
             print("\n")
+            # Continue analysis or quit?
             continue_choice()
     
-             
+        # Do if choice     
         elif choice == '2' :
             # Show news headlines
             stock_news = gn.get_headlines(stock_ticker)
             gn.print_headlines(stock_news, stock_ticker)
             print("\n")
+            # Continue analysis or quit?
             continue_choice()
-            
+        
+        # Do if choice    
         elif choice == '3' :
             # Show financial data
             print("\n")
             fd.scrape_analyst_predictions(stock_ticker)
             fd.scrape_financial_kpi(stock_ticker)
             print("\n")
+            # Continue analysis or quit?
             continue_choice()
-            
+        
+        # Do if choice    
         elif choice == '4' :
             # Show descriptive stats menu
             descriptive_stats_menu(stock_data, stock_ticker)
-            
+        
+        # Do if choice    
         elif choice == '5' :
             # Show predictive stats menu
             predictive_stats_menu(stock_data, stock_ticker)
         
+        # Do if choice
         elif choice == '6' :
             # Back to square 1
             startup()
-            
+        
+        # Do if choice    
         elif choice == '7' :
+            # Exit application
             exit()
         
         else:
