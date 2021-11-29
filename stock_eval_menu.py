@@ -119,10 +119,13 @@ def predictive_stats_menu(stock_data, stock_ticker):
         if choice == "1":
             
             try:
+            
                 # Prepare Regression Data
                 lr_target_date, lr_X, lr_Y = lr.linear_regression_dataprep(stock_data)
+                print("Preparing data for linear regression...")
                 # Do regression
                 lr_line, lr_rsquared, reg_pred = lr.linear_regression(lr_target_date, lr_X, lr_Y)
+                print("Successful output of regression prediction data in browser window.")
                 # Evaluate regression
                 lr.linear_regression_evaluation(lr_Y, lr_line, lr_rsquared)
             
@@ -137,12 +140,15 @@ def predictive_stats_menu(stock_data, stock_ticker):
             try:
                 # Create LSTM dataset
                 look_back, date_train, date_test, close_train, close_test, train_generator, test_generator, close_data_noarray, close_data = lstm.lstm_prepare_data(stock_data)
+                print("Training LSTM model...")
                 # Train LSTM model
                 model, prediction, close_train, close_test = lstm.lstm_train(look_back, train_generator, test_generator, close_test, close_train)
                 # Visualize Model
                 lstm.lstm_visualize(date_test, date_train, close_test, close_train, prediction)
+                print("Successful output of LSTM training in browser window.")
                 # Make Prediction
                 lstm.lstm_make_prediction(model, look_back, stock_data, close_data, close_data_noarray, stock_ticker)
+                print("Successful output of LSTM prediction in browser window.")
                 # Evaluate Prediction
                 lstm.lstm_evaluation(prediction, close_train)
             except:
@@ -152,6 +158,7 @@ def predictive_stats_menu(stock_data, stock_ticker):
             continue_choice()
             
         elif choice == "3":
+            print("Gathering news headlines and testing them with Random Forest model...")
             stock_news = gn.get_headlines(stock_ticker)
             sa.rf_predict(stock_news)
             
@@ -164,12 +171,15 @@ def predictive_stats_menu(stock_data, stock_ticker):
                 # Make Prophet Prediction
                 # Prepare Dataset
                 prophet_data_train = pf.prophet_dataprep(stock_data)
+                print("Training Facebook Prophet model...")
                 # Create Forecast
                 m, forecast, prophet_pred = pf.prophet_forecast(prophet_data_train)
                 # Visualize Forecast
                 pf.prophet_visualize_forecast(m, forecast)
+                print("Successful output of Facebook Prophet prediction in browser window.")
                 # Visualize components
                 pf.prophet_visualize_components(m, forecast)
+                print("Successful output of Facebook Prophet components analysis in browser window.")
             except:
                 print("Timeframe not suitable for Facebook Prophet prediction. Please enter timeframe of minimum 100 days length.")
             
@@ -178,6 +188,9 @@ def predictive_stats_menu(stock_data, stock_ticker):
         
         elif choice == "5":
             break
+        
+        elif choice == "6":
+            exit()
         
         else:
             print("Wrong input format. Please re-enter.")
