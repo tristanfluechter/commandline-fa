@@ -53,9 +53,9 @@ def get_yahoo_data():
     # Report back if timeframea long enough for full functionality
     if date_difference <= 60:
         # Prediction models require more days to work
-        print(f"For optimal functionality, please enter a timeframe of more than 60 days (current: {date_difference} days).")
+        print(f"\nFor optimal functionality, please enter a timeframe of more than 60 days (current: {date_difference} days).")
     
     # Tell user successful import has been achieved
-    print(f"Successfully imported {date_difference} days of stock data for ticker {stock_ticker} from {start_date} to {end_date}.")
+    print(f"\nSuccessfully imported {date_difference} days of stock data for ticker {stock_ticker} from {start_date} to {end_date}.")
     
     return stock_data, stock_ticker, start_date, end_date

@@ -66,8 +66,9 @@ def describe_stock_data(stockdata, ticker):
     stock_des_range = (stock_des_quart3 - stock_des_quart1).round(2)
     stock_des_var_coefficient = ((stock_des_stddev / stock_des_mean) * 100).round(2)
     
+    print("\nDescriptive Statistics:")
     # Print descriptive statistics for the stock.
-    print(f"The mean closing price of stock {ticker} is {stock_des_mean}.")
+    print(f"\nThe mean closing price of stock {ticker} is {stock_des_mean}.")
     print(f"The first quartile of stock {ticker}'s closing price is {stock_des_quart1}.")
     print(f"The second quartile of stock {ticker}'s closing price is {stock_des_quart2}.")
     print(f"The third quartile of stock {ticker}'s closing price is {stock_des_quart3}.")
