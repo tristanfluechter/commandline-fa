@@ -1,6 +1,9 @@
 """
 This module provides a sentiment analysis for a given stock ticker
 based on current Google News headlines.
+
+Credit goes to https://www.kaggle.com/rohit0906/stock-sentiment-analysis-using-news-headlines
+All customizing has been done by the authors of this program
 """
 
 import pandas as pd
@@ -15,8 +18,7 @@ import os
 def train_rf_model():
     """
     Trains a randomforest decision tree with a dataset including stock news and the movement of the stock 
-    market the next day.
-    Dataset can be found at:  https://github.com/ronylpatil/Stock-Sentiment-Analysis
+    market the next day. Dataset can be found at:  https://github.com/ronylpatil/Stock-Sentiment-Analysis
     
     This model should only be used if a new model is to be created. The Random Forest Classifier
     has been pre-trained for quickness of use - therefore, train_rf_model() is not used

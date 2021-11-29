@@ -118,6 +118,8 @@ def plot_simple_ma(stockdata):
     A program that plots the ticker data over the given timeframe
     and provides moving averages based on user input.
     """
+    # Get total number of days in dataframe
+    total_days = len(stockdata)
     
     # Define moving averages to plot
     while True:
@@ -125,10 +127,10 @@ def plot_simple_ma(stockdata):
             ma1_input = int(input("Please state a first moving average to plot (in days): "))
             ma2_input = int(input("Please state a second moving average to plot (in days): "))
             
-            if ma1_input > 0 and ma2_input > 0:
+            if ma1_input > 0 and ma2_input > 0 and ma1_input < total_days and ma2_input < total_days:
                 break
             else:
-                print("Invalid input. Please enter a positive integer.")
+                print(f"Invalid input. Please enter a positive integer that is smaller than the number of total days ({total_days}) in the dataframe.")
         except: 
             print("Invalid input. Please state the desired moving average in days.")
     

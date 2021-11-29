@@ -30,7 +30,15 @@ def startup():
     
     # CLEAR WINDOW
     os.system("clear")
-    print("Welcome to our stock predictor! Provide a stock ticker and a timeframe to perform thorough analysis!")
+    print("""
+Welcome to our stock evaluation and prediction tool.
+This program will allow you to get first descriptive insights into a user-entered stock ticker.
+It will also help you predict the future value of a stock through various forecast methods.
+    
+Please start by entering your desired stock ticker and a time frame you want to inspect.
+If you don't know the stock ticker of your desired company, please visit https://finance.yahoo.com.
+          """)
+    
     stock_data, stock_ticker, start_date, end_date = data_importer.get_yahoo_data()
     
     return stock_data, stock_ticker, start_date, end_date
@@ -88,6 +96,7 @@ def descriptive_stats_menu(stock_data, stock_ticker):
             # Plot simple trendline
             ds.plot_trendline(stock_data)
             print("Successful output of trendline in browser window.")
+            print("\n")
             # Continue analysis or quit?
             continue_choice()
     
@@ -162,10 +171,10 @@ def predictive_stats_menu(stock_data, stock_ticker):
                 print("\n")
                 # Prepare Regression Data
                 lr_target_date, lr_X, lr_Y = lr.linear_regression_dataprep(stock_data)
-                print("Preparing data for linear regression...")
+                print("\nPreparing data for linear regression...")
                 # Do regression
                 lr_line, lr_rsquared, reg_pred = lr.linear_regression(lr_target_date, lr_X, lr_Y)
-                print("Successful output of regression prediction data in browser window.")
+                print("\nSuccessful output of regression prediction data in browser window.")
                 # Evaluate regression
                 lr.linear_regression_evaluation(lr_Y, lr_line, lr_rsquared)
             
@@ -183,7 +192,7 @@ def predictive_stats_menu(stock_data, stock_ticker):
                 print("\n")
                 # Create LSTM dataset
                 look_back, date_train, date_test, close_train, close_test, train_generator, test_generator, close_data_noarray, close_data = lstm.lstm_prepare_data(stock_data)
-                print("Training LSTM model...")
+                print("Training LSTM model...\n")
                 # Train LSTM model
                 model, prediction, close_train, close_test = lstm.lstm_train(look_back, train_generator, test_generator, close_test, close_train)
                 # Visualize Model
@@ -220,7 +229,7 @@ def predictive_stats_menu(stock_data, stock_ticker):
                 # Make Prophet Prediction
                 # Prepare Dataset
                 prophet_data_train = pf.prophet_dataprep(stock_data)
-                print("Training Facebook Prophet model...")
+                print("\nTraining Facebook Prophet model...")
                 # Create Forecast
                 m, forecast, prophet_pred = pf.prophet_forecast(prophet_data_train)
                 # Visualize Forecast
