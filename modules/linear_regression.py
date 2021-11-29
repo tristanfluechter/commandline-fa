@@ -47,7 +47,7 @@ def linear_regression_dataprep(stockdata):
         
             # Check if target date earlier than the dataframe
             if dt.datetime.strptime(lr_target_date, '%Y-%m-%d').date() < lr_dataframe.index[-1]:
-                print(f"The entered date ({lr_target_date} must in the future (after {lr_dataframe.index[-1]}).")
+                print(f"The entered date ({lr_target_date}) must be in the future (after {lr_dataframe.index[-1]}).")
         
             else:
                 break
@@ -163,6 +163,6 @@ def linear_regression_evaluation(lr_Y, lr_line, lr_rsquared):
     
     # Evaluate r-squared metric - how much of the movements does the regression explain?
     if r_squared <= 0.4:
-        print(f"With an r-squared value of {r_squared}, it is __not sufficient__ to rely on a simple regression to predict stock values.")
+        print(f"With an r-squared value of {r_squared}, it is not sufficient to rely on a simple regression to predict stock values.")
     else:
-        print(f"With an r-squared value of {r_squared}, the regression seems to __identify a trend in stock prices__. However, we advise to use additional predictive measures.")
+        print(f"With an r-squared value of {r_squared}, the regression seems to identify a trend in stock prices. However, we advise to use additional predictive measures.")
