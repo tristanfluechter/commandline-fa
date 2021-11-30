@@ -197,7 +197,7 @@ def predictive_stats_menu(stock_data, stock_ticker):
                 model, prediction, close_train, close_test = lstm.lstm_train(look_back, train_generator, test_generator, close_test, close_train)
                 # Visualize Model
                 lstm.lstm_visualize(date_test, date_train, close_test, close_train, prediction)
-                print("Successful output of LSTM training in browser window.")
+                print("\nSuccessful output of LSTM training in browser window.")
                 # Make Prediction
                 lstm.lstm_make_prediction(model, look_back, stock_data, close_data, close_data_noarray, stock_ticker)
                 print("Successful output of LSTM prediction in browser window.")
@@ -234,7 +234,7 @@ def predictive_stats_menu(stock_data, stock_ticker):
                 m, forecast, prophet_pred = pf.prophet_forecast(prophet_data_train)
                 # Visualize Forecast
                 pf.prophet_visualize_forecast(m, forecast)
-                print("Successful output of Facebook Prophet prediction in browser window.")
+                print("\nSuccessful output of Facebook Prophet prediction in browser window.")
                 # Visualize components
                 pf.prophet_visualize_components(m, forecast)
                 print("Successful output of Facebook Prophet components analysis in browser window.")
