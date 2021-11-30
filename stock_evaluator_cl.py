@@ -372,6 +372,9 @@ def main_menu(stock_data, stock_ticker, start_date, end_date):
             print("Wrong input format. Please re-enter.")
             continue
 
-            
-stock_data, stock_ticker, start_date, end_date = startup()
-main_menu(stock_data, stock_ticker, start_date, end_date)
+def main():            
+    stock_data, stock_ticker, start_date, end_date = startup()
+    main_menu(stock_data, stock_ticker, start_date, end_date)
+
+if __name__ == "__main__":
+    main()
